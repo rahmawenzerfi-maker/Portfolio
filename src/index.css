@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #FFFCF7;
+  --color-beige: #F3EBDD;
+  --color-burgundy: #70263A;
+  --color-espresso: #282321;
+  --font-display: "Playfair Display", serif;
+  --font-body: "DM Sans", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-cream);
+  color: var(--color-espresso);
+  font-family: var(--font-body);
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: var(--color-burgundy);
+  color: var(--color-cream);
+}
+
+/* ===== RAHMA.EXE additions (append-only) ===== */
+
+/* Tailwind v4: make `dark:` work from a `.dark` class on <html>,
+   so the toggle controls it instead of the OS setting */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Smooth anchor scrolling, with room for the fixed navbar */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+/* Respect "reduce motion" for anchor scrolling too */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Clear keyboard focus ring in the brand colour */
+:focus-visible {
+  outline: 2px solid var(--color-burgundy);
+  outline-offset: 3px;
+}
+
+/* Clearer, more readable text */
+body {
+  font-size: 1rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ===== Skills marquee ===== */
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.marquee-track {
+  animation: marquee-left var(--marquee-duration, 45s) linear infinite;
+}
+
+.marquee-track.reverse {
+  animation-name: marquee-right;
+}
+
+/* Pause on hover, or when the Pause button is pressed */
+.marquee-pause:hover .marquee-track,
+.marquee-paused .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
